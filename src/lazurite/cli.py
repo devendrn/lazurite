@@ -179,6 +179,7 @@ def build(args):
         lazurite.project.project.compile(
             path,
             args.profile,
+            args.materials,
             args.output,
             defines,
             args.shaderc,
@@ -348,6 +349,14 @@ def main():
         type=str,
         nargs="*",
         help="Profiles to use when building projects",
+    )
+    parser.add_argument(
+        "-m",
+        "--materials",
+        type=str,
+        nargs="*",
+        default=[],
+        help="Project materials to build (overrides include_pattern)",
     )
     parser.add_argument(
         "-d",

@@ -106,12 +106,15 @@ class ShadercCompiler:
 
             result = subprocess.run(args, capture_output=True)
 
+            log = ""
             if result.stderr:
-                print(result.stderr.decode())
+                log += result.stderr.decode()
             if result.stdout:
-                print(result.stdout.decode())
+                log += result.stdout.decode()
 
-            result.check_returncode()
+            if result.returncode > 0:
+                # return error log (str) instead of bgfx_shader
+                return log
 
             bgfx_shader = BgfxShader()
             bgfx_shader.read(f, platform, stage)
